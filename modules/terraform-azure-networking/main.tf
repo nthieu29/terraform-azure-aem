@@ -30,3 +30,8 @@ module "vnet" {
     public = module.network-security-group.network_security_group_id
   }
 }
+
+output "vnet_subnet_id" {
+  value = module.vnet.vnet_subnets[0]
+  description = "The Id of Vnet"
+}
