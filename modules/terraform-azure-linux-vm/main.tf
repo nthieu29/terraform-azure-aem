@@ -3,6 +3,7 @@ resource "azurerm_public_ip" "vm_public_ip_address" {
   resource_group_name = var.resource_group_name
   location = var.location
   allocation_method = "Dynamic"
+  domain_name_label = var.domain_name
 }
 
 resource "azurerm_network_interface" "vm_nic" {
@@ -48,4 +49,8 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
 output "public_ip_address" {
   value = azurerm_linux_virtual_machine.vm.public_ip_address
+}
+
+output "fqdn" {
+  value = azurerm_public_ip.vm_public_ip_address.fqdn
 }

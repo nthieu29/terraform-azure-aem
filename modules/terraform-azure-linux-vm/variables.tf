@@ -28,3 +28,7 @@ variable "vm_size" {
   description = "Size of VM"
   default = "Standard_D2as_v4"
 }
+
+variable "domain_name" {
+  description = "Domain name of VM"
+}
