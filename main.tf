@@ -35,9 +35,47 @@ module "aem_author" {
     azurerm_resource_group.main_resource_group,
     module.aem_networking.vnet_subnet_id]
   vm_name = "aem-author"
+  vm_size = "Standard_D2as_v4"
+  custom_data = filebase64(var.init_script_for_aem_author_vm)
+}
+
+module "aem_publish" {
+  source = "./modules/terraform-azure-linux-vm"
+  location = var.location
+  resource_group_name = var.resource_group_name
+  subnet_id = module.aem_networking.vnet_subnet_id
+  ssh_public_key = var.ssh_public_key
+  depends_on = [
+    azurerm_resource_group.main_resource_group,
+    module.aem_networking.vnet_subnet_id]
+  vm_name = "aem-publish"
+  vm_size = "Standard_D2as_v4"
+  custom_data = filebase64(var.init_script_for_aem_publish_vm)
+}
+
+module "aem_dispatcher" {
+  source = "./modules/terraform-azure-linux-vm"
+  location = var.location
+  resource_group_name = var.resource_group_name
+  subnet_id = module.aem_networking.vnet_subnet_id
+  ssh_public_key = var.ssh_public_key
+  depends_on = [
+    azurerm_resource_group.main_resource_group,
+    module.aem_networking.vnet_subnet_id]
+  vm_name = "aem-dispatcher"
+  vm_size = "Standard_DS1_v2"
+  custom_data = filebase64(var.init_script_for_dispatcher_vm)
 }
 
 output "aem_author_public_ip_address" {
   value = module.aem_author.public_ip_address
+}
+
+output "aem_publish_public_ip_address" {
+  value = module.aem_publish.public_ip_address
+}
+
+output "aem_dispatcher_public_ip_address" {
+  value = module.aem_dispatcher.public_ip_address
 }
 

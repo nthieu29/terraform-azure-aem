@@ -18,3 +18,13 @@ variable "ssh_public_key" {
 variable "vm_name" {
   description = "Name of VM"
 }
+
+variable "custom_data" {
+  description = "Custom Data which should be used for this Virtual Machine"
+  default = ""
+}
+
+variable "vm_size" {
+  description = "Size of VM"
+  default = "Standard_D2as_v4"
+}
